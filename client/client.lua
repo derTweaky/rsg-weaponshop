@@ -34,27 +34,27 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopMenu', function(jobaccess, sho
     if currentjob == jobaccess and isboss == true then
         lib.registerContext({
             id = 'owner_shop_menu',
-            title = 'Weapon Shop Owner Menu',
+            title = Lang:t('lang_2'),
             options = {
                 {
-                    title = 'View Shop Items',
-                    description = 'view the weapon shop items',
+                    title = Lang:t('lang_3'),
+                    description = Lang:t('lang_4'),
                     icon = 'fa-solid fa-store',
                     serverEvent = 'rsg-weaponshop:server:weaponshopGetShopItems',
                     args = { id = shopid },
                     arrow = true
                 },
                 {
-                    title = 'Refill Weapon Shop',
-                    description = 'refill your stock',
+                    title = Lang:t('lang_5'),
+                    description = Lang:t('lang_6'),
                     icon = 'fa-solid fa-boxes-packing',
                     event = 'rsg-weaponshop:client:weaponshopInvReFull',
                     args = { },
                     arrow = true
                 },
                 {
-                    title = 'View Weaponshop Money',
-                    description = 'check and withdraw weapon shop money',
+                    title = Lang:t('lang_7'),
+                    description = Lang:t('lang_8'),
                     icon = 'fa-solid fa-sack-dollar',
                     event = 'rsg-weaponshop:client:weaponshopCheckMoney',
                     args = { },
@@ -66,11 +66,11 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopMenu', function(jobaccess, sho
     else
         lib.registerContext({
             id = 'customer_shop_menu',
-            title = 'Weapon Shop Customer Menu',
+            title = Lang:t('lang_9'),
             options = {
                 {
-                    title = 'Weaponsmith Shop',
-                    description = 'view items for sale',
+                    title = Lang:t('lang_10'),
+                    description = Lang:t('lang_11'),
                     icon = 'fa-solid fa-store',
                     serverEvent = 'rsg-weaponshop:server:weaponshopGetShopItems',
                     args = { id = shopid  },
@@ -100,7 +100,7 @@ RegisterNetEvent("rsg-weaponshop:client:weaponshopInv", function(store_inventory
             if store_inventory[k].stock > 0 then
                 options[#options + 1] = {
                     title = RSGCore.Shared.Items[store_inventory[k].items].label,
-                    description = 'Stock: '..store_inventory[k].stock..' | '..Lang:t('menu.price')..string.format("%.2f", store_inventory[k].price),
+                    description = 'Stock: '..store_inventory[k].stock..' | '..Lang:t('lang_12')..string.format("%.2f", store_inventory[k].price),
                     icon = 'fa-solid fa-box',
                     event = 'rsg-weaponshop:client:weaponshopInvInput',
                     args = store_inventory[k],
@@ -110,7 +110,7 @@ RegisterNetEvent("rsg-weaponshop:client:weaponshopInv", function(store_inventory
         end
         lib.registerContext({
             id = 'shopinv_menu',
-            title = "Shop Menu",
+            title = Lang:t('lang_13'),
             position = 'top-right',
             options = options
         })
@@ -140,7 +140,7 @@ RegisterNetEvent("rsg-weaponshop:client:weaponshopInvReFull", function()
         end
         lib.registerContext({
             id = 'inv_menu',
-            title = "Weaponsmith Stock",
+            title = Lang:t('lang_14'),
             position = 'top-right',
             options = options
         })
@@ -157,15 +157,15 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopInvReFillInput', function(data
     local stock = data.stock
     local input = lib.inputDialog(Lang:t('input.refill').." : "..label, {
         { 
-            label = Lang:t('input.qt'),
-            description = 'must have the amount in your inventory',
+            label = Lang:t('lang_15'),
+            description = Lang:t('lang_16'),
             type = 'number',
             required = true,
             icon = 'hashtag'
         },
         { 
-            label = Lang:t('input.refill_price'),
-            description = 'example: 0.10',
+            label = Lang:t('lang_17'),
+            description = Lang:t('lang_18'),
             default = '0.10',
             type = 'input',
             required = true,
@@ -183,7 +183,7 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopInvReFillInput', function(data
                 print(currentweaponshop, item, input[1], tonumber(input[2]))
                 TriggerServerEvent('rsg-weaponshop:server:weaponshopInvReFill', currentweaponshop, item, input[1], tonumber(input[2]), currentjob)
             else
-                RSGCore.Functions.Notify('Something went wrong, check you have the correct amount and price!', 'error')
+                RSGCore.Functions.Notify(Lang:t('lang_19'), 'error')
             end
             return
         end
@@ -199,7 +199,7 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopInvInput', function(data)
     local stock = data.stock
     local input = lib.inputDialog(RSGCore.Shared.Items[name].label.." | $"..string.format("%.2f", price).." | Stock: "..stock, {
         { 
-            label = Lang:t('input.qt'),
+            label = Lang:t('lang_15'),
             type = 'number',
             required = true,
             icon = 'hashtag'
@@ -213,7 +213,7 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopInvInput', function(data)
     if stock >= tonumber(input[1]) then
         TriggerServerEvent('rsg-weaponshop:server:weaponshopPurchaseItem', currentweaponshop, name, input[1])
     else
-        RSGCore.Functions.Notify(("Invalid Amount"), 'error')
+        RSGCore.Functions.Notify((Lang:t('lang_20')), 'error')
     end
 end)
 
@@ -225,13 +225,13 @@ RegisterNetEvent("rsg-weaponshop:client:weaponshopCheckMoney", function()
         RSGCore.Functions.TriggerCallback('rsg-weaponshop:server:weaponshopS', function(result)
             lib.registerContext({
                 id = 'money_menu',
-                title = 'Balance : $' ..string.format("%.2f", checkmoney.money),
+                title = Lang:t('lang_21') ..string.format("%.2f", checkmoney.money),
                 menu = 'owner_menu',
                 onBack = function() end,
                 options = {
                     {
-                        title = Lang:t('menu.withdraw'),
-                        description = Lang:t('menu.withdraw_sub'),
+                        title = Lang:t('lang_22'),
+                        description = Lang:t('lang_23'),
                         icon = 'fa-solid fa-money-bill-transfer',
                         event = 'rsg-weaponshop:client:weaponshopWithdraw',
                         args = checkmoney,
@@ -249,9 +249,9 @@ end)
 -------------------------------------------------------------------------------------------
 RegisterNetEvent('rsg-weaponshop:client:weaponshopWithdraw', function(checkmoney)
     local money = checkmoney.money
-    local input = lib.inputDialog('Max Withdraw: $'..string.format("%.2f", money), {
+    local input = lib.inputDialog(Lang:t('lang_24')..string.format("%.2f", money), {
         { 
-            label = Lang:t('input.withdraw_champ'),
+            label = Lang:t('lang_25'),
             type = 'input',
             required = true,
             icon = 'fa-solid fa-dollar-sign'
@@ -269,6 +269,6 @@ RegisterNetEvent('rsg-weaponshop:client:weaponshopWithdraw', function(checkmoney
     if money >= tonumber(input[1]) then
         TriggerServerEvent('rsg-weaponshop:server:weaponshopWithdraw', currentweaponshop, tonumber(input[1]))
     else
-        RSGCore.Functions.Notify(("Invalid Amount"), 'error')
+        RSGCore.Functions.Notify((Lang:t('lang_20')), 'error')
     end
 end)

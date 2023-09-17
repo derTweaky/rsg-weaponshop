@@ -51,7 +51,7 @@ AddEventHandler('rsg-weaponshop:server:weaponshopInvReFill', function(location, 
             MySQL.insert('INSERT INTO weaponsmith_stock (`weaponsmith`, `item`, `stock`) VALUES (?, ?, ?);', {job, item, qt})
         end
     end)
-    TriggerClientEvent('RSGCore:Notify', src, 'added to weaponshop', 'success')
+    TriggerClientEvent('RSGCore:Notify', src, Lang:t('lang_26'), 'success')
 end)
 
 RegisterServerEvent('rsg-weaponshop:server:weaponshopPurchaseItem')
@@ -74,11 +74,11 @@ AddEventHandler('rsg-weaponshop:server:weaponshopPurchaseItem', function(locatio
                         local moneymarket = data2[1].money + price
                         exports.oxmysql:execute('UPDATE weapon_shop SET money = ? WHERE shopid = ?',{moneymarket, location})
                     end)
-                    TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.buy_prod').." "..amount.."x "..RSGCore.Shared.Items[item].label, 'success')
+                    TriggerClientEvent('RSGCore:Notify', src, Lang:t('lang_27').." "..amount.."x "..RSGCore.Shared.Items[item].label, 'success')
                 end
             end)
         else 
-            TriggerClientEvent('RSGCore:Notify', src, Lang:t('error.player_no_money'), 'error')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('lang_28'), 'error')
         end
     end)
 end)
