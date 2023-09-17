@@ -15,9 +15,9 @@ Citizen.CreateThread(function()
         })
         if v.showblip == true then
             local WeaponShopBlip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.coords)
-            SetBlipSprite(WeaponShop,  GetHashKey(Config.Blip.blipSprite), true)
+            SetBlipSprite(WeaponShopBlip,  GetHashKey(Config.Blip.blipSprite), true)
             SetBlipScale(Config.Blip.blipScale, 0.2)
-            Citizen.InvokeNative(0x9CB1A1623062F402, WeaponShop, Config.Blip.blipName)
+            Citizen.InvokeNative(0x9CB1A1623062F402, WeaponShopBlip, Config.Blip.blipName)
         end
     end
 end)
