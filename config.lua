@@ -26,5 +26,26 @@ Config.WeaponShops = {
         jobaccess = 'rhoweaponsmith',
         showblip = true
     },
+    {
+        shopid = 'stdweaponshop',
+        shopname = 'Saint Denis Weapon Shop',
+        coords = vector3(2716.7294, -1285.322, 49.630462),
+        jobaccess = 'stdweaponsmith',
+        showblip = true
+    },
+    {
+        shopid = 'tumweaponshop',
+        shopname = 'Tumbleweed Weapon Shop',
+        coords = vector3(-5508.215, -2964.114, -0.629247),
+        jobaccess = 'tumweaponsmith',
+        showblip = true
+    },
+    {
+        shopid = 'annweaponshop',
+        shopname = 'Annesburg Weapon Shop',
+        coords = vector3(2946.5656, 1320.0002, 44.820243),
+        jobaccess = 'annweaponsmith',
+        showblip = true
+    },
     
 }
